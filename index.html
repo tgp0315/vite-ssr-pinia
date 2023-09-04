@@ -7,7 +7,9 @@
     <title>Vite + Vue + TS</title>
   </head>
   <body>
-    <div id="app"><!--ssr-outlet--></div>
-    <script type="module" src="/src/main.ts"></script>
+    <!--preload-links-->
+    <div id="app"><!--app-html--></div>
+    <script type="module" src="./src/entry-server.js"></script>
+    <!--app-store--><!--这个是用来预加载store的-->
   </body>
 </html>

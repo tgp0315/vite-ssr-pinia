@@ -10,19 +10,23 @@
     "dev": "node server",
     "ssr": "nodemon ./server.js",
     "build": "npm run build:client && npm run build:server",
-    "preview": "vite preview",
-    "build:client": "vite build --outDir dist/client",
+    "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.js --outDir dist/server",
+    "generate": "vite build --ssrManifest --outDir dist/static && yarn build:server && node prerender",
     "serve": "cross-env NODE_ENV=production node server",
-    "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && node prerender"
+    "debug": "node --inspect-brk server"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "express": "^4.18.1",
+    "serialize-javascript": "^6.0.1",
     "vue": "^3.2.37",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.1.0",
+    "@vitejs/plugin-vue-jsx": "^3.0.2",
     "cross-env": "^7.0.3",
     "serve-static": "^1.15.0",
     "typescript": "^4.6.4",
