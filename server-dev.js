@@ -21,7 +21,7 @@ const vite = require('vite');
     // 注册 vite 的 Connect 实例作为中间件（注意：vite.middlewares 是一个 Connect 实例）
     app.use(koaConnect(viteServer.middlewares));
 
-    app.use(async (ctx) => {
+    app.use(async (ctx, next) => {
         try {
             // 1. 获取index.html
             let template = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
@@ -43,12 +43,10 @@ const vite = require('vite');
             ctx.body = html;
         } catch (e) {
             viteServer && viteServer.ssrFixStacktrace(e);
-            console.log(e.stack);
             ctx.throw(500, e.stack);
+            next(e);
         }
     });
 
-    app.listen(9000, () => {
-        console.log('server is listening in 9000');
-    });
+    app.listen(9000, () => console.log('server is listening in 9000'));
 })();
